@@ -11,3 +11,14 @@
 
 * [Rosalind](http://rosalind.info/problems/tree-view/?location=algorithmic-heights)
 * [Project Euler](https://projecteuler.net/)
+* [Wikipedia list of data structures](https://en.wikipedia.org/wiki/List_of_data_structures)
+* [GNU Coreutils](https://www.gnu.org/software/coreutils/manual/html_node/index.html)
+
+Next things I want to try:
+
+* Unrolled linked list
+* Circular buffer
+* Bignum library; squaring-based exponentiation
+* Negamax
+* Basic reimplementation of GNU `ping`
+
