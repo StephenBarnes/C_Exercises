@@ -9,7 +9,7 @@
 #include <stdbool.h>
 
 
-void read_degree_matrix(int num_edges, int num_nodes, bool *incidence) {
+void read_incidence_matrix(int num_edges, int num_nodes, bool *incidence) {
 	for (int i = 0; i < num_edges; i++) {
 		int a, b;
 		scanf("%d %d", &a, &b);
@@ -52,7 +52,7 @@ int main() {
 	int num_nodes, num_edges;
 	scanf("%d %d", &num_nodes, &num_edges);
 	bool *incidence = calloc(num_nodes * num_nodes, sizeof(bool));
-	read_degree_matrix(num_edges, num_nodes, incidence);
+	read_incidence_matrix(num_edges, num_nodes, incidence);
 	printf("\nIncidence matrix:\n");
 	print_bool_matrix(num_nodes, incidence);
 	printf("\nDegrees:\n");

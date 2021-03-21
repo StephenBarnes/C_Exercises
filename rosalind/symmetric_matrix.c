@@ -5,8 +5,8 @@
 /* Example:
 array [0 1 1 1,
        1 1 0 0,
-	   1 0 0 0,
-	   1 0 0 1]
+       1 0 0 0,
+       1 0 0 1]
 becomes symmatrix matrix: [0 1 1 1 / 1 0 0 / 0 0 / 1]
 Rows start at indices 0, 4, 7, 9 (+num_rows=4, +3, +2)
 So, index [i][i] in matrix with diagonal becomes:
@@ -66,6 +66,21 @@ void *get_symmatrix_loc(struct symmatrix arr, int i, int j) {
 	if (!arr.include_diagonal)
 		assert(i != j);
 	return arr.start + (arr.elem_size) * symmatrix_index(arr, i, j);
+}
+
+void print_symmatrix(struct symmatrix arr, void (*print)(void *)) {
+	for (int i = 0; i < arr.num_rows; i++) {
+		for (int j = 0; j < arr.num_rows; j++) {
+			if ((i == j) && !arr.include_diagonal) {
+				printf("*");
+			} else {
+				(*print)(get_symmatrix_loc(arr, i, j));
+			}
+			if (j != arr.num_rows - 1)
+				printf(" ");
+		}
+		printf("\n");
+	}
 }
 
 /* Tests:
