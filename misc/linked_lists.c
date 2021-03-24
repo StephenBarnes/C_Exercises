@@ -3,13 +3,13 @@
 
 struct list {
 	struct node *start;
-	int num_nodes;
 	struct node *end;
+	int num_nodes;
 };
 
 struct node {
 	struct node *next;
-	char content;
+	void *data;
 };
 
 struct list *make_list() {
@@ -20,11 +20,11 @@ struct list *make_list() {
 	return l;
 }
 
-void append_data(struct list *l, char data) {
+void append_data(struct list *l, void *data) {
 	struct node *n = (struct node*)malloc(sizeof(struct node));
-	n->content = data;
+	n->data = data;
 	n->next = NULL;
-	l->num_nodes += 1;
+	l->num_nodes++;
 	if (l->start == NULL) {
 		l->start = l->end = n;
 	}
@@ -35,21 +35,48 @@ void append_data(struct list *l, char data) {
 	}
 }
 
-void show_all_data(struct list *l) {
-	struct node *curr = l->start;
+void print_char_list(struct list l) {
+	struct node *curr = l.start;
 	while (curr != NULL) {
-		printf("%c\n", curr->content);
+		printf("%c\n", *((char*)(curr->data)));
 		curr = curr->next;
 	}
 }
 
+void print_int_list(struct list l) {
+	struct node *curr = l.start;
+	while (curr != NULL) {
+		printf("%d\n", *((int*)(curr->data)));
+		curr = curr->next;
+	}
+}
+
+char *make_char(char c) {
+	char *ptr = malloc(sizeof(char));
+	*ptr = c;
+	return ptr;
+}
+
+char *make_int(int x) {
+	char *ptr = malloc(sizeof(int));
+	*ptr = x;
+	return ptr;
+}
+
 
 int main() {
-	struct list *l = make_list();
-	append_data(l, 'h');
-	append_data(l, 'e');
-	append_data(l, 'l');
-	append_data(l, 'l');
-	append_data(l, 'o');
-	show_all_data(l);
+	struct list char_list = *make_list();
+	append_data(&char_list, make_char('t'));
+	append_data(&char_list, make_char('e'));
+	append_data(&char_list, make_char('s'));
+	append_data(&char_list, make_char('t'));
+	append_data(&char_list, make_char('1'));
+	print_char_list(char_list);
+
+	struct list int_list = *make_list();
+	append_data(&int_list, make_int(1));
+	append_data(&int_list, make_int(2));
+	append_data(&int_list, make_int(4));
+	append_data(&int_list, make_int(8));
+	print_int_list(int_list);
 }
