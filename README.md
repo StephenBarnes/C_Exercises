@@ -17,7 +17,6 @@
 Next things I want to try:
 
 * Unrolled linked list
-* Circular buffer
 * Bignum library; squaring-based exponentiation
 * Negamax
 * Basic reimplementation of GNU `ping`
