@@ -6,8 +6,10 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <malloc.h>
 
 int state;
+bool *first_mover_loses;
 
 void set_starting_number() {
 	printf("Set starting value: ");
@@ -33,13 +35,20 @@ int get_player_move() {
 	}
 }
 
-bool first_mover_loses(int curr_state) {
-	if (curr_state == 0) return false;
+bool compute_first_mover_loses(int curr_state) {
 	for (int i = 1; i * i <= curr_state; i++) {
 		const int new_state = curr_state - (i*i);
-		if (first_mover_loses(new_state)) return false;
+		if (first_mover_loses[new_state]) return false;
 	}
 	return true;
+}
+
+void compute_state_values(int max_state) {
+	first_mover_loses = malloc((max_state + 1) * sizeof(bool));
+	first_mover_loses[0] = false;
+	for (int i = 1; i <= max_state; i++) {
+		first_mover_loses[i] = compute_first_mover_loses(i);
+	}
 }
 
 int get_ai_move() {
@@ -47,7 +56,7 @@ int get_ai_move() {
 	for (int i = 1; i * i <= state; i++) {
 		const int move = i*i;
 		const int new_state = state - move;
-		if (first_mover_loses(new_state)) {
+		if (first_mover_loses[new_state]) {
 			best_move = move;
 			// Don't break, rather take highest move that still guarantees win
 		}
@@ -79,6 +88,7 @@ void game_loop() {
 
 int main() {
 	set_starting_number();
+	compute_state_values(state);
 	printf("\n");
 	game_loop();
 }
